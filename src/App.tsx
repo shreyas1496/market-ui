@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import './App.css';
 import useFetch from 'use-http';
 import { orderBy as _orderBy } from 'lodash';
+import { Notify } from './components';
 // @ts-ignore
 const JsonTable = require('ts-react-json-table');
 
@@ -38,10 +39,12 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  
+
   return (
     <div className="App">
       <header className="App-header">
-
+        <Notify />
         <select style={{ padding: '20px' }} value={sortOn} onChange={(e) => setSortOn(e.target.value)}>
           <option value="44">44</option>
           <option value="20">20</option>

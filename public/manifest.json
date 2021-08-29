@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Market Watch",
+  "name": "Market Tracker with moving average alerts",
   "icons": [
     {
       "src": "favicon.ico",

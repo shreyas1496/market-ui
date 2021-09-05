@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   ReactElement,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 import firebase from "../firebase";
@@ -18,7 +19,8 @@ const messaging = firebase.messaging();
 export const Notify: FunctionComponent<Props> = ({
   setToken,
 }): ReactElement => {
-  const [enabled, setEnabled] = useState(false);
+  const permission = Notification.permission;
+  const [enabled, setEnabled] = useState(permission === "granted");
 
   const onEnabled = useCallback(() => {
     messaging
@@ -33,6 +35,12 @@ export const Notify: FunctionComponent<Props> = ({
       });
   }, [setToken]);
 
+  useEffect(() => {
+    if (permission === "granted") {
+      onEnabled();
+    }
+  }, [permission, onEnabled]);
+
   return (
     <>
       <FormControlLabel
@@ -41,7 +49,6 @@ export const Notify: FunctionComponent<Props> = ({
         }
         label="Notifications"
       />
-      {/* <div>{token}</div> */}
     </>
   );
 };

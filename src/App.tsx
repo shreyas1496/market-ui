@@ -61,7 +61,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Notify setToken={setToken} />
-        {token}
         <select
           style={{ padding: "20px" }}
           value={sortOn}

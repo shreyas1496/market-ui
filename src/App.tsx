@@ -3,6 +3,8 @@ import "./App.css";
 import useFetch from "use-http";
 import { orderBy as _orderBy, get as _get } from "lodash";
 import { Notify } from "./components";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
 
 const columns = [
   { key: "name", label: "Name" },
@@ -29,6 +31,7 @@ const columns = [
 function App() {
   const [sortOn, setSortOn] = useState("0");
   const [token, setToken] = useState("");
+  const [search, setSearch] = useState("");
   const {
     loading,
     error,
@@ -37,15 +40,23 @@ function App() {
   } = useFetch("https://shreyas1496.tech/market-api/data", {}, []);
 
   const data2 = useMemo(() => {
-    const int = data.map((row: any) => {
-      const closeNess =
-        Math.abs(row.ltp - _get(row, `movingAverageValues[${sortOn}].value`)) /
-        row.ltp;
-      return { ...row, closeNess };
-    });
+    const int = data
+      // @ts-ignore
+      .filter(({ name }) => {
+        console.log(name);
+
+        return search ? name.includes(search.toUpperCase()) : true;
+      })
+      .map((row: any) => {
+        const closeNess =
+          Math.abs(
+            row.ltp - _get(row, `movingAverageValues[${sortOn}].value`)
+          ) / row.ltp;
+        return { ...row, closeNess };
+      });
 
     return _orderBy(int, `closeNess`, "asc");
-  }, [sortOn, data]);
+  }, [sortOn, data, search]);
 
   const todo = useCallback(() => {
     const id = setInterval(
@@ -61,19 +72,24 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Notify setToken={setToken} />
-        <select
-          style={{ padding: "5px", margin: "10px" }}
+        <Select
           value={sortOn}
-          onChange={(e) => setSortOn(e.target.value)}
+          onChange={(e) => setSortOn(e.target.value as string)}
         >
           <option value="0">44</option>
           <option value="1">20</option>
           <option value="2">10</option>
-        </select>
+        </Select>
+        <TextField
+          label="Filter"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
       </header>
       <section className="tables">
         {error && "Error!"}
         {loading && "Loading..."}
+
         <table>
           <thead>
             <tr>

@@ -62,7 +62,7 @@ function App() {
       <header className="App-header">
         <Notify setToken={setToken} />
         <select
-          style={{ padding: "20px" }}
+          style={{ padding: "5px", margin: "10px" }}
           value={sortOn}
           onChange={(e) => setSortOn(e.target.value)}
         >

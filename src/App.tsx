@@ -42,11 +42,9 @@ function App() {
   const data2 = useMemo(() => {
     const int = data
       // @ts-ignore
-      .filter(({ name }) => {
-        console.log(name);
-
-        return search ? name.includes(search.toUpperCase()) : true;
-      })
+      .filter(({ name }) =>
+        search ? name.includes(search.toUpperCase()) : true
+      )
       .map((row: any) => {
         const closeNess =
           Math.abs(

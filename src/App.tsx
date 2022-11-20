@@ -37,7 +37,7 @@ function App() {
     error,
     data = [],
     post,
-  } = useFetch("https://shreyas1496.tech/market-api/data", {}, []);
+  } = useFetch(`${window.location.origin}/market-api/data`, {}, []);
 
   const data2 = useMemo(() => {
     const int = data

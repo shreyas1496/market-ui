@@ -37,7 +37,7 @@ function App() {
     error,
     data = [],
     post,
-  } = useFetch(`${window.location.origin}/market-api/data`, {}, []);
+  } = useFetch(`https://app2.paisa.foundation/market-api/data`, {}, []);
 
   const data2 = useMemo(() => {
     const int = data
@@ -87,6 +87,7 @@ function App() {
       <section className="tables">
         {error && "Error!"}
         {loading && "Loading..."}
+        {data2.length === 0 && <a href="https://app2.paisa.foundation/market-api/init" target="_blank" >Go to login</a>}
 
         <table>
           <thead>
